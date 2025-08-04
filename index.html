@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenido a Villa María</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background:#fdfbf7;}
+    h1 { text-align: center; }
+    .lang-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); margin-top:2rem;}
+    .card { background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.08); padding:1.5rem; text-align:center; transition: transform .2s;}
+    .card:hover{transform:translateY(-4px);}
+    .flag { font-size:3rem; }
+    a { text-decoration:none; color:#444;}
+  </style>
+</head>
+<body>
+  <h1>Guías y manuales · Villa María</h1>
+
+  <section class="lang-grid">
+    <!-- Español -->
+    <a class="card" href="./es/manual.pdf" target="_blank">
+      <div class="flag">🇪🇸</div>
+      <strong>Manual en Español</strong>
+    </a>
+
+    <!-- English -->
+    <a class="card" href="./en/manual.pdf" target="_blank">
+      <div class="flag">🇬🇧</div>
+      <strong>Guide in English</strong>
+    </a>
+
+    <!-- Français -->
+    <a class="card" href="./fr/manual.pdf" target="_blank">
+      <div class="flag">🇫🇷</div>
+      <strong>Guide en Français</strong>
+    </a>
+  </section>
+
+  <p style="text-align:center;margin-top:2rem;">
+    <small>¿Necesitas ayuda? Contacto WhatsApp +34 657484085</small>
+  </p>
+</body>
+</html>
