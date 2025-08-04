@@ -8,62 +8,57 @@
     body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background:#fdfbf7; }
     h1 { text-align: center; }
 
-    /* Tarjetas principales de idioma */
-    .lang-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top:2rem; }
+    /* Rejilla de tarjetas por idioma */
+    .lang-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top:2rem; }
 
-    /* Contenedor para cada acordeón <details> */
-    details { background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.08); padding:1.5rem; position: relative; }
-    summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: .8rem; font-size:1.1rem; }
-    summary::-webkit-details-marker { display:none; }
-    .flag { font-size:2.2rem; }
+    .card { background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.08); padding:1.5rem 1.5rem 1.2rem; }
+    .card-header { display:flex; align-items:center; gap:.6rem; margin-bottom:.8rem; font-size:1.15rem; }
+    .flag { font-size:2rem; }
 
-    /* Lista interna de documentos */
-    .doc-list { margin-top:1rem; padding-left: 1.2rem; }
-    .doc-list li { margin: .4rem 0; }
+    /* Lista de documentos */
+    .doc-list { margin:0; padding-left:1.2rem; }
+    .doc-list li { margin:.35rem 0; }
     .doc-list a { color:#444; text-decoration:none; }
-    .doc-list a:hover { text-decoration: underline; }
-
+    .doc-list a:hover { text-decoration:underline; }
   </style>
 </head>
 <body>
   <h1>Guías y manuales · Villa María</h1>
 
   <section class="lang-grid">
-
     <!-- Español -->
-    <details>
-      <summary><span class="flag">🇪🇸</span><strong>Español</strong></summary>
+    <div class="card">
+      <div class="card-header"><span class="flag">🇪🇸</span><strong>Español</strong></div>
       <ul class="doc-list">
-        <li><a href="https://docs.google.com/document/d/1tOk1RL4t6OSuwMKJNiYgITdUwHAKWNvhqzLyLEsBnRI/edit?usp=drive_link" target="_blank">Manual completo (PDF)</a></li>
+        <li><a href="https://docs.google.com/document/d/1tOk1RL4t6OSuwMKJNiYgITdUwHAKWNvhqzLyLEsBnRI/export?format=pdf" target="_blank">Manual completo (PDF)</a></li>
         <li><a href="./es/checkout.pdf" target="_blank">Proceso de salida (PDF)</a></li>
         <li><a href="https://youtu.be/VIDEO_ES" target="_blank">Video tutorial (YouTube)</a></li>
       </ul>
-    </details>
+    </div>
 
     <!-- English -->
-    <details>
-      <summary><span class="flag">🇬🇧</span><strong>English</strong></summary>
+    <div class="card">
+      <div class="card-header"><span class="flag">🇬🇧</span><strong>English</strong></div>
       <ul class="doc-list">
         <li><a href="./en/manual.pdf" target="_blank">Full manual (PDF)</a></li>
         <li><a href="./en/checkout.pdf" target="_blank">Check-out steps (PDF)</a></li>
         <li><a href="https://youtu.be/VIDEO_EN" target="_blank">Tutorial video (YouTube)</a></li>
       </ul>
-    </details>
+    </div>
 
     <!-- Français -->
-    <details>
-      <summary><span class="flag">🇫🇷</span><strong>Français</strong></summary>
+    <div class="card">
+      <div class="card-header"><span class="flag">🇫🇷</span><strong>Français</strong></div>
       <ul class="doc-list">
         <li><a href="./fr/manual.pdf" target="_blank">Guide complet (PDF)</a></li>
         <li><a href="./fr/checkout.pdf" target="_blank">Procédure de départ (PDF)</a></li>
         <li><a href="https://youtu.be/VIDEO_FR" target="_blank">Vidéo tutoriel (YouTube)</a></li>
       </ul>
-    </details>
-
+    </div>
   </section>
 
   <p style="text-align:center;margin-top:2rem;">
-    <small>¿Necesitas ayuda? Contacto WhatsApp +34 699589800 / +34 657484085</small>
+    <small>¿Necesitas ayuda? Contacto WhatsApp +34 699 589 800 / +34 657 484 085</small>
   </p>
 </body>
 </html>
