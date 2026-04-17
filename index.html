@@ -517,6 +517,8 @@
     let currentTab  = 'arrive';
 
     function detectLang() {
+      const saved = localStorage.getItem('vm_lang');
+      if (saved && ['es', 'en', 'fr'].includes(saved)) return saved;
       const nav = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
       if (nav.startsWith('fr')) return 'fr';
       if (nav.startsWith('en')) return 'en';
@@ -525,6 +527,7 @@
 
     function applyLang(lang) {
       currentLang = lang;
+      localStorage.setItem('vm_lang', lang);
       const t = I18N[lang];
 
       document.documentElement.lang = lang;
