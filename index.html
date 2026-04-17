@@ -3,58 +3,595 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guías y manuales · Villa María</title>
+  <title>Villa María</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background:#fdfbf7; }
-    h1 { text-align: center; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* Rejilla de tarjetas por idioma */
-    .lang-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top:2rem; }
-    .card { background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.08); padding:1.5rem 1.5rem 1.2rem; }
-    .card-header { display:flex; align-items:center; gap:.6rem; margin-bottom:.8rem; font-size:1.15rem; }
-    .flag { font-size:2rem; }
+    :root {
+      --sand:   #f5f0e8;
+      --cream:  #fdfbf7;
+      --terrac: #c0714a;
+      --olive:  #6b7c4e;
+      --dark:   #2c2416;
+      --mid:    #6b5e4e;
+      --light:  #ede8df;
+      --white:  #ffffff;
+      --shadow: 0 2px 16px rgba(44,36,22,.10);
+      --radius: 16px;
+    }
 
-    /* Lista de documentos */
-    .doc-list { margin:0; padding-left:1.2rem; }
-    .doc-list li { margin:.35rem 0; }
-    .doc-list a { color:#444; text-decoration:none; }
-    .doc-list a:hover { text-decoration:underline; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--light);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(44,36,22,.07);
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: .85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--terrac);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: -.02em;
+    }
+
+    /* ── LANGUAGE SELECTOR ── */
+    .lang-selector {
+      display: flex;
+      gap: .35rem;
+    }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+      padding: .4rem .7rem;
+      border: 1.5px solid var(--light);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--mid);
+      font-size: .8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s ease;
+      white-space: nowrap;
+    }
+
+    .lang-btn .flag { font-size: 1rem; }
+    .lang-btn .label { display: none; }
+
+    @media (min-width: 480px) {
+      .lang-btn .label { display: inline; }
+    }
+
+    .lang-btn:hover {
+      border-color: var(--terrac);
+      color: var(--terrac);
+      background: #fdf3ee;
+    }
+
+    .lang-btn.active {
+      background: var(--terrac);
+      border-color: var(--terrac);
+      color: var(--white);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #3a2c1a 0%, #5c3d20 50%, #7a5230 100%);
+      color: var(--white);
+      text-align: center;
+      padding: 2.5rem 1.25rem 2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      margin-bottom: .4rem;
+    }
+
+    .hero .subtitle {
+      font-size: .95rem;
+      opacity: .75;
+      font-weight: 400;
+    }
+
+    /* ── NAV TABS ── */
+    .section-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--light);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .section-nav::-webkit-scrollbar { display: none; }
+
+    .section-nav-inner {
+      display: flex;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .85rem 1rem;
+      border: none;
+      background: transparent;
+      color: var(--mid);
+      font-size: .88rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2.5px solid transparent;
+      transition: all .2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover { color: var(--terrac); }
+
+    .tab-btn.active {
+      color: var(--terrac);
+      border-bottom-color: var(--terrac);
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 2rem;
+    }
+
+    .doc-section {
+      display: none;
+      animation: fadeIn .25s ease;
+    }
+
+    .doc-section.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--sand);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: -.02em;
+    }
+
+    /* ── IFRAME WRAPPER ── */
+    .doc-frame-wrapper {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .doc-frame {
+      width: 100%;
+      height: 75vh;
+      min-height: 480px;
+      border: none;
+      display: block;
+    }
+
+    .doc-open-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      margin-top: .9rem;
+      padding: .55rem 1.1rem;
+      background: transparent;
+      border: 1.5px solid var(--light);
+      border-radius: 999px;
+      color: var(--mid);
+      font-size: .82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+
+    .doc-open-btn:hover {
+      border-color: var(--terrac);
+      color: var(--terrac);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.7);
+      text-align: center;
+      padding: 1.75rem 1.25rem;
+    }
+
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .footer-help {
+      font-size: .85rem;
+      margin-bottom: .75rem;
+    }
+
+    .footer-contacts {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: .65rem;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .55rem 1.1rem;
+      background: #25d366;
+      color: var(--white);
+      border-radius: 999px;
+      font-size: .85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+
+    .whatsapp-btn:hover { opacity: .85; }
+
+    /* ── LOADING SKELETON ── */
+    .frame-loading {
+      position: absolute;
+      inset: 0;
+      background: var(--sand);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .75rem;
+      color: var(--mid);
+      font-size: .88rem;
+      pointer-events: none;
+      transition: opacity .3s;
+    }
+
+    .frame-loading.hidden { opacity: 0; }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid var(--light);
+      border-top-color: var(--terrac);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
-  <h1>Guías y manuales · Villa María</h1>
 
-  <section class="lang-grid">
-    <!-- Español -->
-    <div class="card">
-      <div class="card-header"><span class="flag">🇪🇸</span><strong>Español</strong></div>
-      <ul class="doc-list">
-        <li><a href="https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/preview?usp=sharing" target="_blank">Cómo llegar</a></li>
-        <li><a href="https://docs.google.com/document/d/1BozKvYsvqusJT4Dlv_Q1wE6TLd4vcYcPhBVp9DUQwQs/preview?usp=sharing" target="_blank">Manual de uso de la vivienda</a></li>
-      </ul>
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <a class="logo" href="#">
+        <div class="logo-icon">🏡</div>
+        <span class="logo-text">Villa María</span>
+      </a>
+
+      <div class="lang-selector" role="group" aria-label="Idioma / Language / Langue">
+        <button class="lang-btn active" data-lang="es" aria-pressed="true">
+          <span class="flag">🇪🇸</span><span class="label">Español</span>
+        </button>
+        <button class="lang-btn" data-lang="en" aria-pressed="false">
+          <span class="flag">🇬🇧</span><span class="label">English</span>
+        </button>
+        <button class="lang-btn" data-lang="fr" aria-pressed="false">
+          <span class="flag">🇫🇷</span><span class="label">Français</span>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <!-- English -->
-    <div class="card">
-      <div class="card-header"><span class="flag">🇬🇧</span><strong>English</strong></div>
-      <ul class="doc-list">
-        <li><a href="https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/preview?usp=sharing" target="_blank">How to arrive</a></li>
-        <li><a href="https://docs.google.com/document/d/1bDxkDKI80U6M4Ov3jQ8TqNPdhRkH0sxjzdFFE01xpC8/preview?usp=sharing" target="_blank">House User Manual</a></li>
-      </ul>
+  <!-- HERO -->
+  <div class="hero">
+    <h1 data-i18n="hero_title">Guías y manuales</h1>
+    <p class="subtitle" data-i18n="hero_subtitle">Todo lo que necesitas para tu estancia</p>
+  </div>
+
+  <!-- SECTION TABS -->
+  <nav class="section-nav" aria-label="Secciones">
+    <div class="section-nav-inner">
+      <button class="tab-btn active" data-tab="arrive">
+        <span>📍</span><span data-i18n="tab_arrive">Cómo llegar</span>
+      </button>
+      <button class="tab-btn" data-tab="manual">
+        <span>🏠</span><span data-i18n="tab_manual">Manual de uso</span>
+      </button>
     </div>
+  </nav>
 
-    <!-- Français -->
-    <div class="card">
-      <div class="card-header"><span class="flag">🇫🇷</span><strong>Français</strong></div>
-      <ul class="doc-list">
-        <li><a href="https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/preview?usp=sharing" target="_blank">Comment s’y rendre</a></li>
-        <li><a href="https://docs.google.com/document/d/1Fvg_2JNZ5dYC2S2E4oXKOjv4X1e_tokK83-ighk-PEI/preview?usp=sharing" target="_blank">Manuel d’utilisation du logement</a></li>  
-      </ul>
+  <!-- MAIN CONTENT -->
+  <main>
+
+    <!-- SECTION: HOW TO ARRIVE -->
+    <section class="doc-section active" id="section-arrive">
+      <div class="section-header">
+        <div class="section-icon">📍</div>
+        <h2 class="section-title" data-i18n="arrive_title">Cómo llegar</h2>
+      </div>
+
+      <div class="doc-frame-wrapper">
+        <div class="frame-loading" id="loading-arrive">
+          <div class="spinner"></div>
+          <span data-i18n="loading">Cargando documento…</span>
+        </div>
+        <iframe
+          class="doc-frame"
+          id="frame-arrive"
+          src="https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/preview?usp=sharing"
+          allow="autoplay"
+          title="Cómo llegar"
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <a class="doc-open-btn" id="open-arrive"
+         href="https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/view?usp=sharing"
+         target="_blank" rel="noopener">
+        ↗ <span data-i18n="open_doc">Abrir en nueva pestaña</span>
+      </a>
+    </section>
+
+    <!-- SECTION: HOUSE MANUAL -->
+    <section class="doc-section" id="section-manual">
+      <div class="section-header">
+        <div class="section-icon">🏠</div>
+        <h2 class="section-title" data-i18n="manual_title">Manual de uso de la vivienda</h2>
+      </div>
+
+      <div class="doc-frame-wrapper">
+        <div class="frame-loading" id="loading-manual">
+          <div class="spinner"></div>
+          <span data-i18n="loading">Cargando documento…</span>
+        </div>
+        <iframe
+          class="doc-frame"
+          id="frame-manual"
+          src="https://docs.google.com/document/d/1BozKvYsvqusJT4Dlv_Q1wE6TLd4vcYcPhBVp9DUQwQs/preview?usp=sharing"
+          title="Manual de uso"
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <a class="doc-open-btn" id="open-manual"
+         href="https://docs.google.com/document/d/1BozKvYsvqusJT4Dlv_Q1wE6TLd4vcYcPhBVp9DUQwQs/view?usp=sharing"
+         target="_blank" rel="noopener">
+        ↗ <span data-i18n="open_doc">Abrir en nueva pestaña</span>
+      </a>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-help" data-i18n="footer_help">¿Necesitas ayuda? Contacta con nosotros por WhatsApp</p>
+      <div class="footer-contacts">
+        <a class="whatsapp-btn" href="https://wa.me/34699589800" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          +34 699 589 800
+        </a>
+        <a class="whatsapp-btn" href="https://wa.me/34657484085" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          +34 657 484 085
+        </a>
+      </div>
     </div>
-  </section>
+  </footer>
 
-  <p style="text-align:center;margin-top:2rem;">
-    <small>¿Necesitas ayuda? Contacto WhatsApp +34 699 589 800 / +34 657 484 085</small>
-  </p>
+  <script>
+    const DOCS = {
+      arrive: {
+        es: { src: 'https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/preview?usp=sharing',
+               view: 'https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/view?usp=sharing' },
+        en: { src: 'https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/preview?usp=sharing',
+               view: 'https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/view?usp=sharing' },
+        fr: { src: 'https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/preview?usp=sharing',
+               view: 'https://drive.google.com/file/d/1pCKnGAaseu715qreiRMLlpQc4aJISB3_/view?usp=sharing' }
+      },
+      manual: {
+        es: { src: 'https://docs.google.com/document/d/1BozKvYsvqusJT4Dlv_Q1wE6TLd4vcYcPhBVp9DUQwQs/preview?usp=sharing',
+               view: 'https://docs.google.com/document/d/1BozKvYsvqusJT4Dlv_Q1wE6TLd4vcYcPhBVp9DUQwQs/view?usp=sharing' },
+        en: { src: 'https://docs.google.com/document/d/1bDxkDKI80U6M4Ov3jQ8TqNPdhRkH0sxjzdFFE01xpC8/preview?usp=sharing',
+               view: 'https://docs.google.com/document/d/1bDxkDKI80U6M4Ov3jQ8TqNPdhRkH0sxjzdFFE01xpC8/view?usp=sharing' },
+        fr: { src: 'https://docs.google.com/document/d/1Fvg_2JNZ5dYC2S2E4oXKOjv4X1e_tokK83-ighk-PEI/preview?usp=sharing',
+               view: 'https://docs.google.com/document/d/1Fvg_2JNZ5dYC2S2E4oXKOjv4X1e_tokK83-ighk-PEI/view?usp=sharing' }
+      }
+    };
+
+    const I18N = {
+      es: {
+        hero_title:    'Guías y manuales',
+        hero_subtitle: 'Todo lo que necesitas para tu estancia',
+        tab_arrive:    'Cómo llegar',
+        tab_manual:    'Manual de uso',
+        arrive_title:  'Cómo llegar',
+        manual_title:  'Manual de uso de la vivienda',
+        open_doc:      'Abrir en nueva pestaña',
+        loading:       'Cargando documento…',
+        footer_help:   '¿Necesitas ayuda? Contacta con nosotros por WhatsApp'
+      },
+      en: {
+        hero_title:    'Guides & manuals',
+        hero_subtitle: 'Everything you need for your stay',
+        tab_arrive:    'How to arrive',
+        tab_manual:    'House manual',
+        arrive_title:  'How to arrive',
+        manual_title:  'House User Manual',
+        open_doc:      'Open in new tab',
+        loading:       'Loading document…',
+        footer_help:   'Need help? Contact us on WhatsApp'
+      },
+      fr: {
+        hero_title:    'Guides et manuels',
+        hero_subtitle: 'Tout ce dont vous avez besoin pour votre séjour',
+        tab_arrive:    "Comment s'y rendre",
+        tab_manual:    "Manuel d'utilisation",
+        arrive_title:  "Comment s'y rendre",
+        manual_title:  "Manuel d'utilisation du logement",
+        open_doc:      'Ouvrir dans un nouvel onglet',
+        loading:       'Chargement du document…',
+        footer_help:   'Besoin d\'aide ? Contactez-nous sur WhatsApp'
+      }
+    };
+
+    let currentLang = 'es';
+    let currentTab  = 'arrive';
+
+    function detectLang() {
+      const nav = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
+      if (nav.startsWith('fr')) return 'fr';
+      if (nav.startsWith('en')) return 'en';
+      return 'es';
+    }
+
+    function applyLang(lang) {
+      currentLang = lang;
+      const t = I18N[lang];
+
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        const active = btn.dataset.lang === lang;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', active);
+      });
+
+      updateFrames(lang);
+    }
+
+    function updateFrames(lang) {
+      ['arrive', 'manual'].forEach(key => {
+        const doc = DOCS[key][lang];
+        const frame = document.getElementById('frame-' + key);
+        const openBtn = document.getElementById('open-' + key);
+        if (frame.src !== doc.src) {
+          showLoading(key);
+          frame.src = doc.src;
+        }
+        openBtn.href = doc.view;
+      });
+    }
+
+    function showLoading(key) {
+      const el = document.getElementById('loading-' + key);
+      if (el) { el.classList.remove('hidden'); }
+    }
+
+    function hideLoading(key) {
+      const el = document.getElementById('loading-' + key);
+      if (el) { el.classList.add('hidden'); }
+    }
+
+    function showTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.doc-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      document.getElementById('section-' + tab).classList.add('active');
+      document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
+    }
+
+    // Iframe load handlers
+    ['arrive', 'manual'].forEach(key => {
+      const frame = document.getElementById('frame-' + key);
+      frame.addEventListener('load', () => hideLoading(key));
+    });
+
+    // Language buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+    });
+
+    // Tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => showTab(btn.dataset.tab));
+    });
+
+    // Init
+    applyLang(detectLang());
+  </script>
 </body>
 </html>
